@@ -88,7 +88,7 @@ namespace TestPara
             String expected = "";
             String actual = para.format("");
             Assert.AreEqual(expected, actual);
-
+            
             Assert.AreEqual("one", para.format(" one"));    // truncate leading space...
             Assert.AreEqual("one", para.format(" one "));   // and the rest...
             Assert.AreEqual("one two", para.format("one   two"));

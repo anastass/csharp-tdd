@@ -28,10 +28,21 @@ namespace ParaNamespace
 
         private String format_para(String text)
         {
-            text = Regex.Replace(text, @"\A\s+", "");
-            text = Regex.Replace(text, @"\s+\Z", "");
-            String[] result = Regex.Split(text, @"\s+");
-            return String.Join(" ", result);
+            //text = Regex.Replace(text, @"\A\s+", "");
+            //text = Regex.Replace(text, @"\s+\Z", "");
+            //String[] result = Regex.Split(text, @"\s+");
+            if (text.Length > 0) 
+            {
+                Regex expression = new Regex(@"(\S+)");
+                var results = expression.Matches(text);
+                String ret = "";
+                foreach (Match match in results)
+                {
+                    ret += " " + match.ToString();
+                }
+                return ret.Substring(1, ret.Length - 1);
+            }
+            return "";
         }
     }
 }
