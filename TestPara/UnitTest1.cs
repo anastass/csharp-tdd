@@ -92,6 +92,7 @@ namespace TestPara
             Assert.AreEqual("one", para.format(" one"));    // truncate leading space...
             Assert.AreEqual("one", para.format(" one "));   // and the rest...
             Assert.AreEqual("one two", para.format("one   two"));
+            Assert.AreEqual("one two tree", para.format(" one   two            tree         "));
         }
 
     }
