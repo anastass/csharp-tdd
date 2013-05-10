@@ -85,14 +85,53 @@ namespace TestPara
         {
             const int new_value = 8;
             Para para = new Para(new_value);
-            String expected = "";
-            String actual = para.format("");
-            Assert.AreEqual(expected, actual);
-            
-            Assert.AreEqual("one", para.format(" one"));    // truncate leading space...
-            Assert.AreEqual("one", para.format(" one "));   // and the rest...
+
+            // empty string formatted correctly
+            Assert.AreEqual("", para.format(""));
+
+            // short line formatted correctly
+            Assert.AreEqual("one two", para.format("one two"));
+
+            // leading space was stripped
+            Assert.AreEqual("one", para.format(" one"));
+
+            // trailing space was stripped too
+            Assert.AreEqual("one", para.format(" one "));
+
+            // extra internal whitespace handled correctly
             Assert.AreEqual("one two", para.format("one   two"));
-            Assert.AreEqual("one two tree", para.format(" one   two            tree         "));
+        }
+
+        [TestMethod]
+        public void TestMethodFormat2()
+        {
+            const int new_value = 8;
+            Para para = new Para(new_value);
+
+            //  third word was wrapped correctly
+            Assert.AreEqual("one two\nthree", para.format("one two three"));
+
+            // packing to exactly the end of the line worked
+            Assert.AreEqual("one two\nthree go", para.format("one two three go"));
+
+            // packing to just past the end of the line worked
+            Assert.AreEqual("one two\nthree\ngo!", para.format("one two three go!"));
+        }
+
+        [TestMethod]
+        public void TestMethodFormat3()
+        {
+            const int new_value = 8;
+            Para para = new Para(new_value);
+
+            // long word was broken correctly
+            Assert.AreEqual("one two\nthree\nfourfiv-\nesix", para.format("one two three fourfivesix"));
+
+            // paragraphs handled correctly
+            Assert.AreEqual("one two\nthree\n\nfour\nfive six", para.format("one two three\n\nfour five six"));
+
+            // whitespace between paragraphs handled correctly
+            Assert.AreEqual("one two\nthree\n\nfour\nfive six", para.format("one two\n three\n \nfour five six"));
         }
 
     }
