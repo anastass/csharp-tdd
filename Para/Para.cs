@@ -4,23 +4,71 @@ using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 
-
 namespace ParaNamespace
 {
+    /// <summary>
+    /// Format text
+    /// </summary>
     public class Para
     {
+        /// <summary>
+        /// Number of instances 
+        /// </summary>
+        public static int count;    // BAD PRACTICE: for testing only
+
+        /// <summary>
+        /// Default number of characters
+        /// </summary>
+        const int DEFAULT_COLUMNS = 72;
+
+        /// <summary>
+        /// Detrmines number of characters per line
+        /// </summary>
         public int columns { get; set; }
 
+        /// <summary>
+        /// Constructor
+        /// </summary>
         public Para()
         {
-            columns = 72;
+            Init(DEFAULT_COLUMNS);
         }
 
+        /// <summary>
+        /// Constructor with colums initialization
+        /// </summary>
+        /// <param name="col">Number of characters per column</param>
+        /// <see cref="ParaNamespace.Para.Init"/>
         public Para(int col)
         {
+            // to access instance variable use this.<v> [= <value>]; this.columns;
+            // to access class variable use <class>.<v> [= <value>]; Para.count;
+            Init(col);
+        }
+
+        /// <summary>
+        /// Initialization
+        /// </summary>
+        /// <param name="col">Number of characters per column</param>
+        protected void Init(int col)
+        {
+            Para.count++;   // Init is called for every instance, here we can make a test how to use class property
             if (col > 0) columns = col;
         }
 
+        /// <summary>
+        /// Destructor
+        /// </summary>
+        ~Para()
+        {
+            Para.count--;
+        }
+
+        /// <summary>
+        /// Format text containing one or more paragraphs
+        /// </summary>
+        /// <param name="text">Text to be formatted</param>
+        /// <returns>Formatted text</returns>
         public String format(String text)
         {
             String[] lines = Regex.Split(text, @"\n(?:[ \t]*\n)");
@@ -31,6 +79,12 @@ namespace ParaNamespace
             return String.Join("\n\n", lines);
         }
 
+        /// <summary>
+        /// Format paragraph
+        /// </summary>
+        /// <param name="text">Paragraph to be formatted</param>
+        /// <returns>Formatted paragraph</returns>
+        /// <seealso cref="Para.format"/>
         private String format_para(String text)
         {
             text = Regex.Replace(text, @"\A\s+", "");

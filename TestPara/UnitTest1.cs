@@ -15,6 +15,9 @@ namespace TestPara
     {
         private Para para;
 
+        /// <summary>
+        /// Test constructor
+        /// </summary>
         public UnitTest1()
         {
             para = new Para();
@@ -60,12 +63,34 @@ namespace TestPara
         //
         #endregion
 
+        /// <summary>
+        /// Test global counter
+        /// </summary>
+        [TestMethod]
+        public void TestCount()
+        {
+            int instance_count;
+            instance_count = Para.count;
+
+            Para obj = new Para();
+            Assert.AreEqual(instance_count+1, Para.count);
+
+            obj = null;
+            Assert.AreEqual(instance_count, Para.count);
+        }
+
+        /// <summary>
+        /// Test default settings
+        /// </summary>
         [TestMethod]
         public void TestProperyColumns1()
         {
             Assert.AreEqual(para.columns, 72);
         }
 
+        /// <summary>
+        /// Test constructor initialization
+        /// </summary>
         [TestMethod]
         public void TestProperyColumns2()
         {
@@ -80,6 +105,9 @@ namespace TestPara
 
         }
 
+        /// <summary>
+        /// Test empty and regular string formastting, and white space handling
+        /// </summary>
         [TestMethod]
         public void TestMethodFormat1()
         {
@@ -102,6 +130,9 @@ namespace TestPara
             Assert.AreEqual("one two", para.format("one   two"));
         }
 
+        /// <summary>
+        /// Test word wrapping and some edge cases
+        /// </summary>
         [TestMethod]
         public void TestMethodFormat2()
         {
@@ -118,6 +149,9 @@ namespace TestPara
             Assert.AreEqual("one two\nthree\ngo!", para.format("one two three go!"));
         }
 
+        /// <summary>
+        /// Test multiple paragraph formatting
+        /// </summary>
         [TestMethod]
         public void TestMethodFormat3()
         {
